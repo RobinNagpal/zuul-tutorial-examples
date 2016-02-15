@@ -2,6 +2,12 @@ apply plugin: 'war'
 apply plugin: 'jetty'
 apply plugin: 'groovy'
 
+repositories {
+	maven { url "http://gradle.artifactoryonline.com/gradle/libs/" }
+	mavenCentral()
+	
+}
+
 buildscript {
 	repositories {
 		jcenter()
@@ -18,7 +24,9 @@ apply plugin: 'spring-boot'
 dependencies {
 	compile 'com.netflix.zuul:zuul-core:2.0.0-rc.2'
 	compile 'com.netflix.zuul:zuul-servletapi:2.0.0-rc.2'
-	compile 'org.springframework.boot:spring-boot-starter-web:1.3.2.RELEASE'
+	compile ('org.springframework.boot:spring-boot-starter-web:1.3.2.RELEASE') {
+        exclude module : 'spring-boot-starter-logging'
+    }
 }
 
 eclipse {

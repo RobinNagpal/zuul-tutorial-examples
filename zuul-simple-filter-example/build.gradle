@@ -1,0 +1,37 @@
+apply plugin: 'war'
+apply plugin: 'jetty'
+apply plugin: 'groovy'
+
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath(
+				'org.springframework.boot:spring-boot-gradle-plugin:1.3.2.RELEASE'
+		)
+	}
+}
+
+apply plugin: 'spring-boot'
+
+dependencies {
+	compile 'com.netflix.zuul:zuul-core:2.0.0-rc.2'
+	compile 'com.netflix.zuul:zuul-servletapi:2.0.0-rc.2'
+	compile 'org.springframework.boot:spring-boot-starter-web:1.3.2.RELEASE'
+}
+
+eclipse {
+	classpath {
+		  downloadSources = true
+		  downloadJavadoc = true
+	}
+}
+
+jettyRun.contextPath = '/'
+
+jettyRun.doFirst {
+	System.setProperty("zuul.filter.root", "src/main/groovy/filters")
+}
+
+
